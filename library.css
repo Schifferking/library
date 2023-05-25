@@ -1,0 +1,17 @@
+body {
+  margin: 1rem;
+  background-color: #000000;
+  color: #d3d3d3;
+}
+
+#books-container {
+  display: grid;
+  grid-template-rows: repeat(1, fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 50px 50px;
+}
+
+.book-card {
+  padding: 0.5rem;
+  border: 1px solid #ffffff;
+}
