@@ -1,6 +1,8 @@
 let myLibrary = [];
 prefillLibrary();
 displayLibrary();
+addClickEventToButtons();
+addFormEvent();
 
 function prefillLibrary() {
   const mistborn = new Book('Mistborn: The Final Empire', 'Brandon Sanderson', 541, true);
@@ -23,16 +25,12 @@ function addBookToLibrary(book) {
 }
 
 function displayLibrary() {
-  const booksContainer = getBooksContainer();
+  const booksContainer = document.getElementById("books-container");
   for (book of myLibrary) {
     bookCard = createBookCard();
     addBookProperties(book, bookCard);
-    addbookCard(booksContainer, bookCard)
+    addbookCard(booksContainer, bookCard);
   }
-}
-
-function getBooksContainer() {
-  return document.getElementById("books-container");
 }
 
 function createBookCard() {
@@ -74,4 +72,38 @@ function addPropertyToCard(bookProperty, bookCard) {
 
 function addbookCard(booksContainer, bookCard) {
   booksContainer.appendChild(bookCard);
+}
+
+function addClickEventToButtons() {
+  const buttons = document.querySelectorAll(".toggle-button");
+  for (const button of buttons) {
+    button.addEventListener("click", toggleFormContainer);
+  }
+}
+
+function toggleFormContainer() {
+  const formContainer = document.querySelector(".form-container");
+  formContainer.classList.toggle("hidden");
+}
+
+function addFormEvent() {
+  const form = document.querySelector("form");
+  form.addEventListener("submit", function(event) {
+    const bookData = getFormData();
+    const booksContainer = document.getElementById("books-container");
+    const bookCard = createBookCard();
+    const newBook = new Book(bookData[0], bookData[1], bookData[2], bookData[3]);
+    addBookToLibrary(newBook);
+    addBookProperties(newBook, bookCard);
+    addbookCard(booksContainer, bookCard);
+    event.preventDefault();
+  });
+}
+
+function getFormData() {
+  const bookTitle = document.querySelector("[name='book-title']").value;
+  const bookAuthor = document.querySelector("[name='book-author']").value;
+  const bookPages = Number(document.querySelector("[name='book-pages']").value);
+  const bookRead = document.querySelector("[name='book-read']").checked;
+  return [bookTitle, bookAuthor, bookPages, bookRead];
 }

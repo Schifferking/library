@@ -14,11 +14,36 @@
   <main>
     <div id="books-container">
     </div>
+    <button class="toggle-button">New book</button>
+    <div class="form-container hidden">
+      <form action="" method="post">
+        <label>
+          Book title:
+          <input name="book-title" placeholder="Treasure Island">
+        </label>
+        <label>
+          Author name:
+          <input name="book-author" placeholder="Robert Louis Stevenson">
+        </label>
+        <label>
+          Page count:
+          <input type="number" name="book-pages" min="1" placeholder="292">
+        </label>
+        <label>
+          Read:
+          <input type="checkbox" name="book-read" value="true">
+        </label>
+        <button type="reset" class="toggle-button">Cancel</button>
+        <input type="submit" class="submit-button" value="Create book">
+      </form>
+    </div>
   </main>
-  <footer>
-    <p>© 2023 Actually goodreads. All rights reserved.</p>
-    <p>This is a fake website.</p>
-  </footer>
+  <div class="footer-container">
+    <footer>
+      <p>© 2023 Actually goodreads. All rights reserved.</p>
+      <p>This is a fake website.</p>
+    </footer>
+  </div>
   <script src="scripts/main.js"></script>
 </body>
 </html>
