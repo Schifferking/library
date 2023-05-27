@@ -26,10 +26,13 @@ function addBookToLibrary(book) {
 
 function displayLibrary() {
   const booksContainer = document.getElementById("books-container");
+  let index = 0;
   for (book of myLibrary) {
     bookCard = createBookCard();
-    addBookProperties(book, bookCard);
+    addBookProperties(book, bookCard, index);
+    createDeleteBookButton(bookCard);
     addbookCard(booksContainer, bookCard);
+    index++;
   }
 }
 
@@ -39,7 +42,12 @@ function createBookCard() {
   return bookCard;
 }
 
-function addBookProperties(book, bookCard) {
+function setIndexToCard(bookCard, index) {
+  bookCard.setAttribute("data-index", index);
+}
+
+function addBookProperties(book, bookCard, index) {
+  setIndexToCard(bookCard, index);
   for (const property in book) {
     let bookProperty = createBookPropertyElement(property, book[property]);
     addPropertyToCard(bookProperty, bookCard);
@@ -74,6 +82,30 @@ function addbookCard(booksContainer, bookCard) {
   booksContainer.appendChild(bookCard);
 }
 
+function createDeleteBookButton(bookCard) {
+  const deleteBookButton = document.createElement("button");
+  deleteBookButton.textContent = "Delete book";
+  deleteBookButton.addEventListener("click", deleteBook);
+  bookCard.appendChild(deleteBookButton);
+}
+
+function deleteBook() {
+  const bookCard = this.parentElement;
+  bookIndex = bookCard.getAttribute("data-index");
+  console.log(bookIndex);
+  myLibrary.splice(Number(bookIndex), 1);
+  bookCard.remove();
+  updateIndexes();
+}
+
+function updateIndexes() {
+  let index = 0;
+  for (bookCard of document.querySelectorAll(".book-card")) {
+    setIndexToCard(bookCard, index);
+    index++;
+  }
+}
+
 function addClickEventToButtons() {
   const buttons = document.querySelectorAll(".toggle-button");
   for (const button of buttons) {
@@ -94,7 +126,8 @@ function addFormEvent() {
     const bookCard = createBookCard();
     const newBook = new Book(bookData[0], bookData[1], bookData[2], bookData[3]);
     addBookToLibrary(newBook);
-    addBookProperties(newBook, bookCard);
+    addBookProperties(newBook, bookCard, myLibrary.length - 1);
+    createDeleteBookButton(bookCard);
     addbookCard(booksContainer, bookCard);
     event.preventDefault();
   });
