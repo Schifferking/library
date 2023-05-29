@@ -6,10 +6,11 @@ body {
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  /*
-  background-color: #000000;
-  color: #d3d3d3;
-  */
+  background-color: #6d28d9;
+}
+
+h1 {
+  color: #f5f3ff;
 }
 
 main {
@@ -25,6 +26,15 @@ main > :nth-child(2)  {
   padding: 1.5rem;
   font-size: 1.1rem;
   align-self: center;
+  background-color: #6b21a8;
+  border: 2px solid #3b0764;
+  color: #f5f3ff;
+  transition-duration: 0.4s;
+}
+
+main > :nth-child(2):hover {
+  background-color: #3b0764;
+  border : 2px solid #d8b4fe;
 }
 
 .disabled {
@@ -46,8 +56,9 @@ main > :nth-child(2)  {
   align-items: center;
   gap: 10px;
   padding: 1rem;
-  /*border: 1px solid #ffffff;*/
-  border: 2px solid #000000;
+  border: 3px solid #3b0764;
+  background-color: #d8b4fe;
+  color: #3b0764;
 }
 
 .hidden {
@@ -62,7 +73,9 @@ main > :nth-child(2)  {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #999999;
+  border: 2px solid #d8b4fe;
+  background-color: #3b0764;
+  color: #f5f3ff;
 }
 
 form {
@@ -71,6 +84,18 @@ form {
   justify-content: space-evenly;
   height: inherit;
   align-items: center;
+}
+
+form > button,
+input[type="submit"] {
+  background-color: #a855f7;
+  border: 2px solid #3b0764;
+  transition-duration: 0.4s;
+}
+
+form >button:hover,
+input[type="submit"]:hover {
+  background-color: #9333ea;
 }
 
 input,
@@ -115,11 +140,11 @@ button {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #a855f7;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #a855f7;
 }
 
 input:checked + .slider:before {
@@ -131,8 +156,19 @@ input:checked + .slider:before {
 .delete-button {
   padding: 1rem;
   font-size: 1rem;
+  background-color: #a855f7;
+  border: 2px solid #3b0764;
+  transition-duration: 0.4s;
+}
+
+.delete-button:hover {
+  background-color: #9333ea;
 }
 
 .footer-container {
   flex-shrink: 0;
+}
+
+footer {
+  color: #f5f3ff;
 }
