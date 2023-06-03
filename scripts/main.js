@@ -1,4 +1,46 @@
-let myLibrary = [];
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.read = read
+  }
+
+  toggleRead() {
+    this.read = this.read === true ? false: true;
+  }
+}
+
+class Library {
+  books = [];
+
+  addBookToLibrary(book) {
+    this.books.push(book);
+  }
+
+  get books() {
+    return this.books;
+  }
+}
+
+class Placeholder {
+  booksContainer = document.querySelector(".books-container");
+  formContainer = document.querySelector(".form-container");
+  form = document.querySelector("form");
+  cancelButton = document.querySelector(".toggle-button");
+  newBookButton = document.querySelector(".new-book");
+}
+
+let myLibrary = new Library();
+let placeholder = new Placeholder();
+
+// DELETE THESE LATER
+const booksContainer = document.querySelector(".books-container");
+const formContainer = document.querySelector(".form-container");
+const form = document.querySelector("form");
+const cancelButton = document.querySelector(".toggle-button");
+const newBookButton = document.querySelector(".new-book");
+/*let myLibrary = [];*/
 /*prefillLibrary();
 displayLibrary();*/
 addClickEventToButtons();
@@ -13,25 +55,14 @@ function prefillLibrary() {
   addBookToLibrary(guards);
 }
 
-function Book(title, author, pages, read) {
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
-}
-
-Book.prototype.toggleRead = function() {
-  this.read = this.read === true ? false : true;
-}
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
 function displayLibrary() {
-  const booksContainer = document.getElementById("books-container");
   let index = 0;
-  for (book of myLibrary) {
+  // changed this
+  for (let book of myLibrary.books) {
     bookCard = createBookCard();
     addBookProperties(book, bookCard, index);
     createToggleBookButton(bookCard);
@@ -89,20 +120,21 @@ function addbookCard(booksContainer, bookCard) {
 }
 
 function createToggleBookButton(bookCard) {
-const label = document.createElement("label");
-const checkbox = document.createElement("input");
-const span = document.createElement("span");
-// Add classes and attribute
-label.classList.add("switch");
-toggleDisable(label);
-checkbox.setAttribute("type", "checkbox");
-span.classList.add("slider");
-// Add functionality to toggle button
-const book = myLibrary[Number(bookCard.getAttribute("data-index"))];
-checkbox.addEventListener("change", () => {book.toggleRead()});
-bookCard.appendChild(label);
-label.appendChild(checkbox);
-label.appendChild(span);
+  const label = document.createElement("label");
+  const checkbox = document.createElement("input");
+  const span = document.createElement("span");
+  // Add classes and attribute
+  label.classList.add("switch");
+  toggleDisable(label);
+  checkbox.setAttribute("type", "checkbox");
+  span.classList.add("slider");
+  // Add functionality to toggle button
+  // changed this
+  const book = myLibrary.books[Number(bookCard.getAttribute("data-index"))];
+  checkbox.addEventListener("change", () => {book.toggleRead()});
+  bookCard.appendChild(label);
+  label.appendChild(checkbox);
+  label.appendChild(span);
 }
 
 function createDeleteBookButton(bookCard) {
@@ -117,8 +149,8 @@ function createDeleteBookButton(bookCard) {
 function deleteBook() {
   const bookCard = this.parentElement;
   bookIndex = bookCard.getAttribute("data-index");
-  console.log(bookIndex);
-  myLibrary.splice(Number(bookIndex), 1);
+  //changed this
+  myLibrary.books.splice(Number(bookIndex), 1);
   bookCard.remove();
   updateIndexes();
 }
@@ -132,8 +164,6 @@ function updateIndexes() {
 }
 
 function addClickEventToButtons() {
-  const cancelButton = document.querySelector(".toggle-button");
-  const newBookButton = document.querySelector("#new-book");
   cancelButton.addEventListener("click", disableButtons);
   newBookButton.addEventListener("click", disableButtons);
 }
@@ -143,9 +173,9 @@ function disableButtons() {
   const buttons = document.querySelectorAll(".book-card > button");
   const newBookButton = document.querySelector("#new-book");
   toggleFormContainer();
-  for (toggle of toggles)
+  for (let toggle of toggles)
     toggleDisable(toggle);
-  for (button of buttons)
+  for (let button of buttons)
     toggleDisable(button);
   toggleDisable(newBookButton);
 }
@@ -156,19 +186,17 @@ function toggleDisable(button) {
 }
 
 function toggleFormContainer() {
-  const formContainer = document.querySelector(".form-container");
   formContainer.classList.toggle("hidden");
 }
 
 function addFormEvent() {
-  const form = document.querySelector("form");
   form.addEventListener("submit", function(event) {
     const bookData = getFormData();
-    const booksContainer = document.getElementById("books-container");
     const bookCard = createBookCard();
     const newBook = new Book(bookData[0], bookData[1], bookData[2], bookData[3]);
-    addBookToLibrary(newBook);
-    addBookProperties(newBook, bookCard, myLibrary.length - 1);
+    // changed the next two lines
+    myLibrary.addBookToLibrary(newBook);
+    addBookProperties(newBook, bookCard, myLibrary.books.length - 1);
     createToggleBookButton(bookCard);
     createDeleteBookButton(bookCard);
     addbookCard(booksContainer, bookCard);

@@ -12,22 +12,22 @@
     <h1>Actually goodreads</h1>
   </header>
   <main>
-    <div id="books-container">
+    <div class="books-container">
     </div>
-    <button id="new-book">New book</button>
+    <button class="new-book">New book</button>
     <div class="form-container hidden">
       <form action="" method="post">
         <label>
-          Book title:
-          <input name="book-title" placeholder="Treasure Island">
+          *Book title:
+          <input name="book-title" placeholder="Treasure Island" required>
         </label>
         <label>
-          Author name:
-          <input name="book-author" placeholder="Robert Louis Stevenson">
+          *Author name:
+          <input name="book-author" placeholder="Robert Louis Stevenson" required>
         </label>
         <label>
-          Page count:
-          <input type="number" name="book-pages" min="1" placeholder="292">
+          *Page count:
+          <input type="number" name="book-pages" min="1" placeholder="292" required>
         </label>
         <label>
           Read:
